@@ -14,8 +14,10 @@
 - Continents etc. entfernen
 - Datenintegration: Dateien mergen (eindeutige ID: Entity/Code/Jahr), Outer Join um alle Infos zu behalten
 - Datentypen checken
--- Anforderung Betreuung: begrenzten Analysezeitraum auswählen + DF darauf filtern
+- Anforderung Betreuung: begrenzten Analysezeitraum auswählen + DF darauf filtern
  --> den Zeitraum (6 Jahre) mit höchster Datenvollständigkeit bzw. geringsten NaNs
+
+### Erkentnisse
 
 ### Notizen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
