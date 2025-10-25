@@ -1,4 +1,4 @@
-# Step A - load raw Data + merge all data with u5mr as base + filter 6 year period
+# Step A - load raw Data + merge all data with u5mr as base + filter 6 year period + scale up label to 1000
 
 import pandas as pd
 import os
@@ -30,6 +30,7 @@ def limit_period(df) -> pd.DataFrame:
 load raw data, join columns, 
 exclude non-countries, 
 set Multi-Index and merge all 10 df
+scale U5MR up to 1000
 """
 def load_merge_raw_data() -> pd.DataFrame:
     big_df = None
@@ -56,6 +57,7 @@ def load_merge_raw_data() -> pd.DataFrame:
             )
             big_df = limit_period(big_df)
     
+    big_df["child_mortality_igme"] = big_df["child_mortality_igme"] * 10
     big_df = big_df.reset_index(level=0)
     print(big_df)  
     return big_df

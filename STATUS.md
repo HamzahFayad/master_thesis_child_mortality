@@ -4,8 +4,8 @@
 ### Aktuelle Aufgaben
 - describe() für erste Erkentnisse
 - Explorative Datenanalyse, einzelne Features, Zusammenhänge Features + Label analysieren
-- Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich
-- Feature vs. Label & Feature vs. Feature
+- Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
+- Feature vs. Label & Feature vs. Feature, Correlations
 
 ### Geplant
 - Data Preprocessing:
@@ -21,11 +21,19 @@
 - Schritt A für Pipeline > rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
 
 ### Erkentnisse
+Daten:
 - Zeitraum begrenzen auf 6 Jahre -> 2013-2018 am wenigsten null Werte insg.
 - 1200 Rows im main DF 2013-2018
-- insg. 1273 Null Values, am höchsten diese (physicians_per_1000_people: 447, nurses_and_midwives_per_1000_people: 338, prevalence_of_undernourishment: 198)
+
+Explorative Analyse:
+- insg. 1273 Null Values, am höchsten bei: physicians_per_1000_people: 447 (37.25%), nurses_and_midwives_per_1000_people: 338 (28.17%), prevalence_of_undernourishment: 198 (16.50%)
+- höchste U5MR im DF: 278 per 1000 Lebendgeburten, geringste U5MR: 1,7 per 1000 Geburten
+- Label + 6 features sind rechtsschief verteilt (Histogramme)
+
 - starke bis mittelstarke Korrelationen zw. allen Features & Label
-- aber: Viele Features korrelieren stark
+- aber auch: Viele Features korrelieren stark
+
+Missing Values:
 
 ### Notizen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
