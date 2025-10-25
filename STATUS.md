@@ -21,6 +21,7 @@
 - Schritt A für Pipeline > rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
 
 ### Erkentnisse
+- Zeitraum begrenzen auf 6 Jahre -> 2013-2018 am wenigsten null Werte insg.
 - 1200 Rows im main DF 2013-2018
 - insg. 1273 Null Values, am höchsten diese (physicians_per_1000_people: 447, nurses_and_midwives_per_1000_people: 338, prevalence_of_undernourishment: 198)
 - starke bis mittelstarke Korrelationen zw. allen Features & Label
