@@ -7,7 +7,7 @@ import os
 PATH = "../00_data/0_raw/"
 all_files = [f for f in os.listdir(PATH)]
 sorted_files = sorted(os.listdir(PATH))
-print(sorted_files)
+#print(sorted_files)
 
 #u5mr file at first position (base)
 label_file = sorted_files.pop(1)
@@ -22,8 +22,10 @@ def new_col_names(name):
     return os.path.basename(name).split('.')[0].replace('-', '_')
 
 #limit df to 6 year period 2013-2018
+FROM_YEAR = 2013
+TO_YEAR = 2018
 def limit_period(df) -> pd.DataFrame:
-    df = df[(df.index.get_level_values(2) >= 2013) & (df.index.get_level_values(2) <= 2018)]
+    df = df[(df.index.get_level_values(2) >= FROM_YEAR) & (df.index.get_level_values(2) <= TO_YEAR)]
     return df
 
 """
@@ -32,7 +34,7 @@ exclude non-countries,
 set Multi-Index and merge all 10 df
 scale U5MR up to 1000
 """
-def load_merge_raw_data() -> pd.DataFrame:
+def load_merge_raw_data(PATH) -> pd.DataFrame:
     big_df = None
     joins = ['Entity', 'Code', 'Year']
     
@@ -63,4 +65,8 @@ def load_merge_raw_data() -> pd.DataFrame:
     return big_df
 
 
-load_merge_raw_data()
+
+
+load_merge_raw_data(PATH)
+
+
