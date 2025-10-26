@@ -9,8 +9,11 @@
 
 ### Geplant
 - EDA abschließen
-- Data Preprocessing: Data Cleaning,
-- 
+- Data Preprocessing: Data Cleaning/ Imputation, evtl. Outlier, Transformation (Scaling/Normalize)?
+- evtl. Länderbasiertes Cluster (One-Hot-Encoded) als zusätzl. Feature? (Vergleich Clustering vs OWID basiert)
+- Feature-Engineering, Feature Selection oder Feature-Cluster?
+- Datensplittung für Modelltraining und -test
+- Modelltraining (LR, RF, XGB) und Evaluation
 
 ### Abgeschlossen
 - rohe Daten geladen (10 CSV Dateien) - Label + 9 Features
@@ -37,10 +40,10 @@ Explorative Analyse:
 - aber auch: Viele Features korrelieren stark
 
 Preprocessing:
-a) Missing Values:
-- Schritt B01: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF
-    --> von 1273 missing values nur noch 967 missing values
+- Missing Values: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF (Schritt B01) --> von 1273 missing values nur noch 967 missing values
 
-### Notizen
+### Notizen / offene Fragen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
 Alphabetisierungsrate, Armutsrate
+- wenn Features skaliert werden -> muss für SHAP rückskaliert werden (?) 
+- Herausforderung SHAP Interpretierbarkeit & Multikollinearität (evtl. Features clustern ?)
