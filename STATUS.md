@@ -8,8 +8,9 @@
 - Feature vs. Label & Feature vs. Feature, Correlations
 
 ### Geplant
-- Data Preprocessing:
-    > Data-Handling, 
+- EDA abschließen
+- Data Preprocessing: Data Cleaning,
+- 
 
 ### Abgeschlossen
 - rohe Daten geladen (10 CSV Dateien) - Label + 9 Features
@@ -36,8 +37,7 @@ Explorative Analyse:
 - aber auch: Viele Features korrelieren stark
 
 Preprocessing:
->
-> Missing Values:
+a) Missing Values:
 - Schritt B01: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF
     --> von 1273 missing values nur noch 967 missing values
 
