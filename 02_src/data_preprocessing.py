@@ -17,3 +17,14 @@ def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
 
     #print("NEW FILTERED DF", filtered_df_01)
     return filtered_df_01
+
+
+"""
+Handle missing values for column vaccination_coverage (6 NaNs for Nicaragua (NIC))
+"""
+def handle_missing_vaccination(filtered_df_01) -> pd.DataFrame:
+    COUNTRY_CODE = "NIC"
+    COUNTRY_NAME = "Nicaragua"
+    world_regions = pd.read_csv("./00_data/0_raw/world-regions-worldbank.csv")
+    #calculate median
+    return processed_df_01
