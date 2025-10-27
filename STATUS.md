@@ -42,9 +42,12 @@ Explorative Analyse:
 
 Preprocessing:
 - Missing Values: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF (Schritt B01) --> von 1273 missing values nur noch 967 missing values
+- Missing Values für col "vaccination_coverage_who_unicef": nur 'Nicaragua' hat NaNs   
+  --> Worldbank Regions groups CSV nutzen und den median() von 'vaccination_coverage_who_unicef" berechnen von allen Ländern, die gleiche Gruppe mit 'Nicaragua' teilen (NaNs mit median ersetzen)
 
 ### Notizen / offene Fragen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
 Alphabetisierungsrate, Armutsrate
+- Worldbank Groups als Feature behalten oder erstmal ohne?
 - wenn Features skaliert werden -> muss für SHAP rückskaliert werden (?) 
 - Herausforderung SHAP Interpretierbarkeit & Multikollinearität (evtl. Features clustern ?)
