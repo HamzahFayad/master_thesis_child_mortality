@@ -9,3 +9,15 @@ def count_missing_values(df):
     null_count = df.isna().sum()
     null_count_perc = round((null_count / len(df)) * 100, 2)
     print(f"Missing Values - count for each column:\n\n{null_count}\n\nPercentage of Missing values:\n\n{null_count_perc}")
+    
+
+"""
+Plot scatterplots to show relationships between label and features
+3 cols for comparisons
+"""
+def scatterplots(df, features):
+    fig, axs = plt.subplots(ncols=3, figsize=(18, 6))
+    for id, a in enumerate(axs):
+        sns.scatterplot(data=df, x="child_mortality_igme", y=features[id], hue=features[id], 
+                        size=features[id], sizes=(25, 100), ax=axs[id])
+    plt.show()
