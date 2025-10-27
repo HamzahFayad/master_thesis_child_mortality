@@ -35,7 +35,8 @@ Explorative Analyse:
 - insg. 1273 Null Values, am höchsten bei: physicians_per_1000_people: 447 (37.25%), nurses_and_midwives_per_1000_people: 338 (28.17%), prevalence_of_undernourishment: 198 (16.50%)
 - höchste U5MR im DF: 278 per 1000 Lebendgeburten, geringste U5MR: 1,7 per 1000 Geburten
 - Label + 6 features sind rechtsschief verteilt (Histogramme)
-
+- Scatterplots: einige Feature-Label Beziehungen haben logarithmisches/exponentielles Verhalten 
+  (zB. gdp_per_capita, physicians_per_1000); ähnliche Werte clustern sich oft zusammen, trotzdem auch vereinzelte Outlier
 - starke bis mittelstarke Korrelationen zw. allen Features & Label
 - aber auch: Viele Features korrelieren stark
 
