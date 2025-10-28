@@ -4,11 +4,11 @@ import pandas as pd
 
 # Exclude Countries from DF with Missing Values Threshold >= 50%
 THRESHOLD = 50
-def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
+def exclude_countries_high_missing_values(merged_df, total_values) -> pd.DataFrame:
     
     all_missing_values = merged_df.isnull().groupby(level=0).sum()
     all_missing_values["total_missing"] = all_missing_values.sum(axis=1)    #total missing values
-    all_missing_values["total_missing_%"] = round((all_missing_values["total_missing"] / 54) * 100, 2)  #total missing values %
+    all_missing_values["total_missing_%"] = round((all_missing_values["total_missing"] / total_values) * 100, 2)  #total missing values %
 
     top_missing_countries = all_missing_values.sort_values(ascending=False, by="total_missing_%")
     exclude_countries = top_missing_countries[top_missing_countries["total_missing_%"] >= THRESHOLD]
@@ -25,6 +25,6 @@ Handle missing values for column vaccination_coverage (6 NaNs for Nicaragua (NIC
 def handle_missing_vaccination(filtered_df_01) -> pd.DataFrame:
     COUNTRY_CODE = "NIC"
     COUNTRY_NAME = "Nicaragua"
-    world_regions = pd.read_csv("./00_data/0_raw/world-regions-worldbank.csv")
+    world_regions = pd.read_csv("./00_data/1_interim/world-regions-worldbank.csv")
     #calculate median
     return processed_df_01
