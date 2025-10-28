@@ -65,6 +65,5 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     return big_df
 
 
-load_merge_raw_data(PATH)
-
+load_merge = load_merge_raw_data(PATH)
 
