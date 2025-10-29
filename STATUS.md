@@ -2,10 +2,13 @@
 
 
 ### Aktuelle Aufgaben
-- describe() für erste Erkentnisse
 - Explorative Datenanalyse, einzelne Features, Zusammenhänge Features + Label analysieren
 - Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
 - Feature vs. Label & Feature vs. Feature, Correlations
+
+- Preprocessing B02: restl. Missing Values Imputation (testen)
+                     evtl. 2-Schritte: grouped nach countries per column 
+                     (< 50% missing values: SimpleImputer, > 50% missing values: IterativeImputer)
 
 ### Geplant
 - EDA abschließen
@@ -20,11 +23,12 @@
 - Continents etc. entfernen
 - Datenintegration: Dateien mergen (eindeutige ID: Entity/Code/Jahr), Outer Join um alle Infos zu behalten
 - Datentypen checken
+- describe() für erste Erkentnisse
 - Anforderung Betreuung: begrenzten Analysezeitraum auswählen + DF darauf filtern
     --> Zeitraum (6 Jahre) mit höchster Datenvollständigkeit bzw. geringsten NaNs
-- Schritt A für Pipeline: rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
-- Schritt B01 für Pipeline, erstes Data-Handling: Länder mit >=50% missing values entfernt als custom preprocessing function 01 für ersten gefilterten Datensatz
-  (filtered_data_01.csv als 1. interim Datensatz)
+- Schritt A für Pipeline (Vorarbeit): rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
+- Schritt B01 für Pipeline (Vorarbeit), erstes Data-Handling: Länder mit >=50% missing values entfernt als custom preprocessing function 01 für ersten gefilterten Datensatz (vorallem sind Inseln, Überseegebiete betroffen; filtered_data_01.csv als 1. interim Datensatz)
+- Schritt B02 für Pipeline (Vorarbeit): füg missing indicators für alle 9 Features
 
 ### Erkentnisse
 Daten:
@@ -37,6 +41,8 @@ Explorative Analyse:
 - Label + 6 features sind rechtsschief verteilt (Histogramme)
 - Scatterplots: einige Feature-Label Beziehungen haben logarithmisches/exponentielles Verhalten 
   (zB. gdp_per_capita, physicians_per_1000); ähnliche Werte clustern sich oft zusammen, trotzdem auch vereinzelte Outlier
+- höchste Anzahl an Missing Values haben meist Entwicklungsländer/Länder mit schwierigen Situationen/Umständen (Nordkorea,Südsudan, Guinea...), vereinzelt auch kleine Länder (Monaco oder Andorra zB) - oft schwieriger zuverlässige Daten aus Niedrigeinkommensländern zu erhalten
+
 - starke bis mittelstarke Korrelationen zw. allen Features & Label
 - aber auch: Viele Features korrelieren stark
 
@@ -49,7 +55,7 @@ Vorschritte:
 - nur countries behalten & files mergen, 
 - auf Zeitraum begrenzen (6 Jahre), also pro Country 6 Zeilen
 - countries mit >= 50% missing values ausschließen
-- evtl. Missing Values Spalten (0 oder 1 wenn column fehlt)
+- Missing Values Spalten (0 oder 1 wenn column fehlt)
 Modelltraining:
 - Train-Test Split (grouped nach country?)
 - Imputation (restl. missing values)
