@@ -1,7 +1,7 @@
 # Aktueller Fortschritt - Plan
 
 
-### Aktuelle Aufgaben
+### Todos Aktuell
 - Explorative Datenanalyse, Zusammenhänge Features + Label analysieren
 - Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
 - Feature vs. Label & Feature vs. Feature, Correlations
