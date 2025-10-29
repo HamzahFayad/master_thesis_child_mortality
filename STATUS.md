@@ -25,6 +25,7 @@
 - Schritt A für Pipeline: rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
 - erstes Data-Handling: Länder mit >=50% missing values entfernt
 - Schritt B01 für Pipeline: custom preprocessing function 01 für ersten gefilterten Datensatz
+  (filtered_data_01.csv als 1. interim Datensatz)
 
 ### Erkentnisse
 Daten:
