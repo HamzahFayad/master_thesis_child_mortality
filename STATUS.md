@@ -23,14 +23,13 @@
 - Anforderung Betreuung: begrenzten Analysezeitraum auswählen + DF darauf filtern
     --> Zeitraum (6 Jahre) mit höchster Datenvollständigkeit bzw. geringsten NaNs
 - Schritt A für Pipeline: rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
-- erstes Data-Handling: Länder mit >=50% missing values entfernt
-- Schritt B01 für Pipeline: custom preprocessing function 01 für ersten gefilterten Datensatz
+- Schritt B01 für Pipeline, erstes Data-Handling: Länder mit >=50% missing values entfernt als custom preprocessing function 01 für ersten gefilterten Datensatz
   (filtered_data_01.csv als 1. interim Datensatz)
 
 ### Erkentnisse
 Daten:
 - Zeitraum begrenzen auf 6 Jahre -> 2013-2018 am wenigsten null Werte insg.
-- 1200 Rows im main DF 2013-2018 (Schritt A)
+- 1200 Rows im main DF 2013-2018, 200 Länder (Schritt A)
 
 Explorative Analyse:
 - insg. 1273 Null Values, am höchsten bei: physicians_per_1000_people: 447 (37.25%), nurses_and_midwives_per_1000_people: 338 (28.17%), prevalence_of_undernourishment: 198 (16.50%)
@@ -43,8 +42,19 @@ Explorative Analyse:
 
 Preprocessing:
 - Missing Values: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF (Schritt B01) --> von 1273 missing values nur noch 967 missing values
-- Missing Values für col "vaccination_coverage_who_unicef": nur 'Nicaragua' hat NaNs   
-  --> Worldbank Regions groups CSV nutzen und den median() von 'vaccination_coverage_who_unicef" berechnen von allen Ländern, die gleiche Gruppe mit 'Nicaragua' teilen (NaNs mit median ersetzen)
+
+### Schritte Pipeline:
+Vorschritte:
+- CSV Files laden
+- nur countries behalten & files mergen, 
+- auf Zeitraum begrenzen (6 Jahre), also pro Country 6 Zeilen
+- countries mit >= 50% missing values ausschließen
+- evtl. Missing Values Spalten (0 oder 1 wenn column fehlt)
+Modelltraining:
+- Train-Test Split (grouped nach country?)
+- Imputation (restl. missing values)
+- Training
+- Evaluation
 
 ### Notizen / offene Fragen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
