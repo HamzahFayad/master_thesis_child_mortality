@@ -2,10 +2,10 @@
 
 
 ### Aktuelle Aufgaben
-- Explorative Datenanalyse, einzelne Features, Zusammenhänge Features + Label analysieren
+- Explorative Datenanalyse, Zusammenhänge Features + Label analysieren
 - Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
 - Feature vs. Label & Feature vs. Feature, Correlations
-
+- Skewness: Transformation (zb logn) für rechtsschiefe testweise, Normalisierung/Standardisierung testen (visualisieren) - nur für LR ?
 - Preprocessing B02: restl. Missing Values Imputation (testen)
                      evtl. 2-Schritte: grouped nach countries per column 
                      (< 50% missing values: SimpleImputer, > 50% missing values: IterativeImputer)
@@ -57,14 +57,18 @@ Vorschritte:
 - countries mit >= 50% missing values ausschließen
 - Missing Values Spalten (0 oder 1 wenn column fehlt)
 Modelltraining:
-- Train-Test Split (grouped nach country?)
-- Imputation (restl. missing values)
+- Train-Test Split (grouped nach country? am besten randomized/shuffeld? - random countries für test und trainset statt nach Reihenfolge zu gehen), Jahr entfernen (Fokus ist ja nur Faktoren, sonst wird Trend mitgelernt)?
+- Imputation (restl. missing values), Log-Transf, Normalisieren/Skalieren (nur für Linear Regr) (später Rücskalieren, eig wichtig für XAI)
+Country als kateg. Variable wie behandeln? Encoding (aber zu viel?)
+- (Multikolineraität)
 - Training
 - Evaluation
+- XAI mit SHAP zb.
 
 ### Notizen / offene Fragen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
 Alphabetisierungsrate, Armutsrate
-- Worldbank Groups als Feature behalten oder erstmal ohne?
+- Worldbank Groups als Feature behalten oder erstmal ohne? (x)
+- wie mit Country als kateg. Variable umgehen?
 - wenn Features skaliert werden -> muss für SHAP rückskaliert werden (?) 
 - Herausforderung SHAP Interpretierbarkeit & Multikollinearität (evtl. Features clustern ?)
