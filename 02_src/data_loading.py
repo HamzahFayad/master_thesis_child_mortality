@@ -34,7 +34,7 @@ def get_years_period(df):
     null_count = 0
     year_idx = df.index.get_level_values(2)
     
-    for begin in range(2000, year_idx.max() - 5):
+    for begin in range(2000, year_idx.max() - 4):
         end = begin + 5
         df_six_years = df[(year_idx >= begin) & (year_idx <= end)]
         null_count = df_six_years.isna().sum().sum()
