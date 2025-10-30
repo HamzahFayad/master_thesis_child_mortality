@@ -7,8 +7,8 @@
 - Feature vs. Label & Feature vs. Feature, Correlations
 - Skewness: Transformation (zb logn) für rechtsschiefe testweise, Normalisierung/Standardisierung testen (visualisieren) - nur für LR ?
 - Preprocessing B02: restl. Missing Values Imputation (testen)
-                     evtl. 2-Schritte: grouped nach countries per column 
-                     (< 50% missing values: SimpleImputer, > 50% missing values: IterativeImputer)
+                     evtl grouped nach countries per column 
+                     (missing values: SimpleImputer)
 
 ### Geplant
 - EDA abschließen
