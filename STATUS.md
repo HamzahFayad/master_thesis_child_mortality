@@ -6,6 +6,7 @@
 - Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
 - Feature vs. Label & Feature vs. Feature, Correlations
 - Skewness: Transformation (zb logn) für rechtsschiefe testweise, Normalisierung/Standardisierung testen (visualisieren) - nur für LR ?
+- Train-Test Split (GroupShuppfleSplit)
 - Preprocessing B02: restl. Missing Values Imputation (testen)
                      evtl grouped nach countries per column 
                      (missing values: SimpleImputer)
@@ -27,8 +28,11 @@
 - Anforderung Betreuung: begrenzten Analysezeitraum auswählen + DF darauf filtern
     --> Zeitraum (6 Jahre) mit höchster Datenvollständigkeit bzw. geringsten NaNs
 - Schritt A für Pipeline (Vorarbeit): rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
+
 - Schritt B01 für Pipeline (Vorarbeit), erstes Data-Handling: Länder mit >=50% missing values entfernt als custom preprocessing function 01 für ersten gefilterten Datensatz (vorallem sind Inseln, Überseegebiete betroffen; filtered_data_01.csv als 1. interim Datensatz)
 - Schritt B02 für Pipeline (Vorarbeit): füg missing indicators für alle 9 Features
+
+- Train Test Split mit GroupShuffleSplit #1: gruppiert nach Ländern splitten für nächste Schritte (+Experimente)
 
 ### Erkentnisse
 Daten:
