@@ -55,7 +55,7 @@ Vorschritte:
 - nur countries behalten & files mergen, 
 - auf Zeitraum begrenzen (6 Jahre), also pro Country 6 Zeilen
 - countries mit >= 50% missing values ausschließen
-- Missing Values Spalten (0 oder 1 wenn column fehlt)
+- Missing Values Spalten (0 oder 1 wenn column fehlt) (oder nach dem Train-Test Split ?)
 Modelltraining:
 - Train-Test Split (grouped nach country? am besten randomized/shuffeld? - random countries für test und trainset statt nach Reihenfolge zu gehen), Jahr entfernen (Fokus ist ja nur Faktoren, sonst wird Trend mitgelernt)?
 - Imputation (restl. missing values), Log-Transf, Normalisieren/Skalieren (nur für Linear Regr) (später Rücskalieren, eig wichtig für XAI)
