@@ -29,9 +29,9 @@ Handle missing values #2: add missing values indicator (0 or 1)
 Make only for columns that have null values
 0 = not missing & 1 = missing
 """
-def missing_values_indicator(filtered_df_01) -> pd.DataFrame:
+def missing_values_indicator(df) -> pd.DataFrame:
     
-    missing_indicators_df = filtered_df_01.copy()
+    missing_indicators_df = df.copy()
     
     for column in missing_indicators_df.columns:
         if missing_indicators_df[column].isna().sum() > 0:
