@@ -18,7 +18,6 @@ def data_preparation():
     df = exclude_countries_high_missing_values(merged_df)
     df = df.reset_index()
     print(df)
+    return df
 
-    
-    
-data_preparation()
+prepared_df = data_preparation()
