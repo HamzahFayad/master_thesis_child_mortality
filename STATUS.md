@@ -2,21 +2,20 @@
 
 
 ### Todos Aktuell
-- Explorative Datenanalyse, Zusammenhänge Features + Label analysieren
+- weitere Explorative Datenanalyse, Zusammenhänge Features + Label analysieren
 - Verteilungen visualisieren, evtl. zeitliche Trends, 'Top 10' Countries Vergleich etc.
 - Feature vs. Label & Feature vs. Feature, Correlations
-- Skewness: Transformation (zb logn) für rechtsschiefe testweise, Normalisierung/Standardisierung testen (visualisieren) - nur für LR ?
-- Train-Test Split (GroupShuppfleSplit)
-- Preprocessing B02: restl. Missing Values Imputation (testen)
-                     evtl grouped nach countries per column 
-                     (missing values: SimpleImputer)
+
+- Split Datensatz mit GroupShuffleSplit (nach country gruppiert)
+- Cross Validation (GroupKFold) definieren
+
 
 ### Geplant
 - EDA abschließen
-- Data Preprocessing: Data Cleaning/ Imputation, evtl. Outlier, Transformation (Scaling/Normalize)?
-- evtl. Länderbasiertes Cluster (One-Hot-Encoded) als zusätzl. Feature? (Vergleich Clustering vs OWID basiert)
-- Feature-Engineering, Feature Selection oder Feature-Cluster?
-- Datensplittung für Modelltraining und -test
+- Split, GroupKFold
+
+- Data Preprocessing: Missing Indicators, Data Cleaning/ Imputation, Transformation (Skewness, Scaling/Normalize)?
+- Länderbasiertes Cluster (One-Hot-Encoded) als zusätzl. Feature? (Vergleich Clustering vs OWID)
 - Modelltraining (LR, RF, XGB) und Evaluation
 
 ### Abgeschlossen
@@ -30,9 +29,8 @@
 - Schritt A für Pipeline (Vorarbeit): rohe Daten laden, non-countries entfernen, filtern auf 6 year period, mergen für main df
 
 - Schritt B01 für Pipeline (Vorarbeit), erstes Data-Handling: Länder mit >=50% missing values entfernt als custom preprocessing function 01 für ersten gefilterten Datensatz (vorallem sind Inseln, Überseegebiete betroffen; filtered_data_01.csv als 1. interim Datensatz)
-- Schritt B02 für Pipeline (Vorarbeit): füg missing indicators für alle 9 Features
 
-- Train Test Split mit GroupShuffleSplit #1: gruppiert nach Ländern splitten für nächste Schritte (+Experimente)
+- Train Test Split mit GroupShuffleSplit #1: gruppiert nach Ländern splitten für nächste Schritte (+Experimente) - (grad nur im Notebook als Test)
 
 ### Erkentnisse
 Daten:
@@ -53,26 +51,28 @@ Explorative Analyse:
 Preprocessing:
 - Missing Values: 7 Länder haben über 50% missing values und daher entfernt >> 1. gefiltertes DF (Schritt B01) --> von 1273 missing values nur noch 967 missing values
 
-### Schritte Pipeline:
+### Schritte Pipeline grob:
 Vorschritte:
 - CSV Files laden
 - nur countries behalten & files mergen, 
 - auf Zeitraum begrenzen (6 Jahre), also pro Country 6 Zeilen
 - countries mit >= 50% missing values ausschließen
-- Missing Values Spalten (0 oder 1 wenn column fehlt) (oder nach dem Train-Test Split ?)
-Modelltraining:
-- Train-Test Split (grouped nach country? am besten randomized/shuffeld? - random countries für test und trainset statt nach Reihenfolge zu gehen), Jahr entfernen (Fokus ist ja nur Faktoren, sonst wird Trend mitgelernt)?
-- Imputation (restl. missing values), Log-Transf, Normalisieren/Skalieren (nur für Linear Regr) (später Rücskalieren, eig wichtig für XAI)
-Country als kateg. Variable wie behandeln? Encoding (aber zu viel?)
-- (Multikolineraität)
-- Training
-- Evaluation
-- XAI mit SHAP zb.
+
+Pipeline:
+- Train-Test Split (grouped nach country)
+- GroupKFold definieren
+- Imputation (restl. missing values), Transformation, Normalisieren/Skalieren (nur für Linear Regr) (später Rücskalieren, eig wichtig für XAI) ??
+Country als kateg. Variable wie behandeln? Cluster mit KMeans (basierend auf numer. Features) & One HotEncoding
+
+- Training (Cross-Validation zb k=5 mit GroupKFold & validieren)
+- Evaluation mit Testset
+------
+- XAI mit SHAP...
 
 ### Notizen / offene Fragen
 - Datensätze, die ausgeschlossen wurden (da viele Länder "No Data"):
-Alphabetisierungsrate, Armutsrate
-- Worldbank Groups als Feature behalten oder erstmal ohne? (x)
+Alphabetisierungsrate, Armutsrate und weitere
 - wie mit Country als kateg. Variable umgehen?
-- wenn Features skaliert werden -> muss für SHAP rückskaliert werden (?) 
+- wenn numer. Features skaliert werden -> muss für SHAP rückskaliert werden (?) 
 - Herausforderung SHAP Interpretierbarkeit & Multikollinearität (evtl. Features clustern ?)
+- missing not at random, wie imputieren? (missing_indicator columns pro feature, iterative imp?)
