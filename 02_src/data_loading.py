@@ -89,7 +89,8 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     #big_df = limit_period(big_df)
 
     big_df["child_mortality_igme"] = big_df["child_mortality_igme"] * 10
-    big_df = big_df.reset_index(level=0)
+    #big_df = big_df.reset_index(level=0)
+    big_df = big_df.reset_index()
     print(big_df)  
     return big_df
 
