@@ -2,4 +2,4 @@
 masterthesis_venv
 infos.txt
 requirements.txt
-__pycache__
+__pycache__/
