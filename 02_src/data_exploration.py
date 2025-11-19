@@ -1,3 +1,6 @@
+import pandas as pd
+import matplotlib.pyplot as plt 
+import seaborn as sns
 # Reusable Functions - Data Exploration
 
 """
@@ -20,4 +23,10 @@ def scatterplots(df, features, cols_num):
     for id, a in enumerate(axs):
         sns.scatterplot(data=df, x="child_mortality_igme", y=features[id], hue=features[id], 
                         size=features[id], sizes=(25, 100), ax=axs[id])
+    plt.show()
+    
+    
+def histograms(df):
+    df.hist(figsize=(14,8))
+    plt.tight_layout()
     plt.show()
