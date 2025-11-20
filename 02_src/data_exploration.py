@@ -25,7 +25,9 @@ def scatterplots(df, features, cols_num):
                         size=features[id], sizes=(25, 100), ax=axs[id])
     plt.show()
     
-    
+"""
+Plot histograms of numeric variables
+"""    
 def histograms(df):
     df.hist(figsize=(14,8))
     plt.tight_layout()
