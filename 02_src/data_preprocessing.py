@@ -8,9 +8,9 @@ Exclude Countries from DF with Missing Values Threshold >= 50%
 THRESHOLD = 50
 def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
     
-    all_missing_values = merged_df.isnull().groupby(level=0).sum()
+    all_missing_values = merged_df.isnull().groupby(merged_df["Entity"]).sum()
     # get sum of values per country for 9 main potential features: 
-    values_count_per_country = merged_df.groupby(level=0).size().iloc[0] * 9
+    values_count_per_country = merged_df.groupby(merged_df["Entity"]).size().iloc[0] * 9
     
     all_missing_values["total_missing"] = all_missing_values.sum(axis=1)    #total missing values
     all_missing_values["total_missing_%"] = round((all_missing_values["total_missing"] / values_count_per_country) * 100, 2)  #total missing values %
@@ -18,7 +18,7 @@ def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
     top_missing_countries = all_missing_values.sort_values(ascending=False, by="total_missing_%")
     exclude_countries = top_missing_countries[top_missing_countries["total_missing_%"] >= THRESHOLD]
 
-    filtered_df_01 = merged_df[~merged_df.index.get_level_values(0).isin(exclude_countries.index.tolist())].copy()
+    filtered_df_01 = merged_df[~merged_df["Entity"].isin(exclude_countries.index.tolist())].copy()
 
     print("NEW FILTERED DF", filtered_df_01)
     return filtered_df_01
