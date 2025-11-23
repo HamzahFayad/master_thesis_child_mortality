@@ -1,3 +1,16 @@
+#----------------------------------------------------------------------
+#data_cleaning.py
+#
+# Data integration: Load raw datasets (csv) from 00_data/0_raw/ and merge 
+#                   all datasets with child_mortality_igme (Label) as base
+# Exlude non-countries (remove additional continents etc. from Our World in Data)
+# Filter dataset by 6 year period (decision made through strategic analysis)
+# Scale up Label to 1000 (common for epidemiological research of U5MR)
+#
+# First Data Pre-Cleaning: 
+# Remove countries rows with high amount of missing values with threshold set at >= 50%
+#----------------------------------------------------------------------
+
 # Step A - load raw Data + merge all data with u5mr as base + filter 6 year period + scale up label to 1000
 
 #Imports
@@ -62,6 +75,11 @@ scale U5MR up to 1000
 @return merged, limited df
 """
 def load_merge_raw_data(PATH) -> pd.DataFrame:
+    
+    #Additional helper csv (assign each country a region based on World Bank)
+    world_regions = pd.read_csv("../00_data/1_interim/world-regions-worldbank.csv")
+    world_regions = world_regions.drop(["Entity", "Year"], axis=1)
+
     big_df = None
     joins = ['Entity', 'Code', 'Year']
     
@@ -89,8 +107,10 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     # scale u5mr to 1000 (common in research by UN IGME etc.)
     big_df["child_mortality_igme"] = big_df["child_mortality_igme"] * 10
     
-    big_df = big_df.reset_index()   
-    #big_df = big_df.reset_index(level=0)
+    big_df = big_df.reset_index()       #big_df = big_df.reset_index(level=0)
+    
+    big_df = pd.merge(big_df, world_regions, on="Code", how="left")
+
     print(big_df)  
     return big_df
 
