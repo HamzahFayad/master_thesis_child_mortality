@@ -61,8 +61,8 @@ y = prepared_df["child_mortality_igme"]
 X = prepared_df.drop(columns=["Code", "Entity", "Year", "child_mortality_igme"])
 group = prepared_df["Entity"]
 
-num_variables = prepared_df.drop(columns=["world_regions_wb"])
-cat_variables = prepared_df["world_regions_wb"]
+num_variables = X.drop(columns=["world_regions_wb"]).columns.to_list()
+cat_variables = ["world_regions_wb"]
 
 #print(X.columns)
 
