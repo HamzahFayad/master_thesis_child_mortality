@@ -17,24 +17,20 @@
 import pandas as pd
 import numpy as np
 
-from sklearn.model_selection import GroupShuffleSplit
-from sklearn.model_selection import GroupKFold
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GroupShuffleSplit, GroupKFold, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import PowerTransformer
+from sklearn.preprocessing import RobustScaler, PowerTransformer, OneHotEncoder
 
 from sklearn.impute import KNNImputer
 
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import LinearRegression
+from sklearn.cluster import KMeans
+
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.ensemble import RandomForestRegressor
 
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import root_mean_squared_error
-from sklearn.metrics import r2_score
+from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_score
 
 from data_cleaning import load_merge_raw_data
 from data_preprocessing import exclude_countries_high_missing_values
