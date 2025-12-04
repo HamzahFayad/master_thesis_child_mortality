@@ -1,10 +1,45 @@
 # Pipeline from Data Loading to Model Training
+#----------------------------------------------------------------------
+#model_pipeline.py
+#
+# Data Preparation: Get main, cleaned dataset from data_cleaning.py & data_preprocessing.py
+#
+# Model Pipeline: 
+# Extract numeric, categorical features as "X", country (Entity) as group, and target variable as "y"
+# GroupShuffleSplit Train-Testset, crossvalidate (GroupKFold) Pipeline with GridSearchCV for 3 models
+#----------------------------------------------------------------------
 
-#import pandas as pd
 
-from data_loading import load_merge_raw_data
+# ----------------------------------
+# IMPORTS
+#-----------------------------------
+
+import pandas as pd
+import numpy as np
+
+from sklearn.model_selection import GroupShuffleSplit
+from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import GridSearchCV
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+
+from sklearn.preprocessing import RobustScaler
+from sklearn.preprocessing import PowerTransformer
+
+from sklearn.impute import KNNImputer
+
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import root_mean_squared_error
+from sklearn.metrics import r2_score
+
+from data_cleaning import load_merge_raw_data
 from data_preprocessing import exclude_countries_high_missing_values
-#Variables
+
+#Data Path
 DATA_PATH = "../00_data/0_raw/"
 
 """
@@ -16,8 +51,39 @@ def data_preparation():
     merged_df = load_merge_raw_data(DATA_PATH)
     #STEP 2: REMOVE COUNTRIES WITH HIGH AMOUNT OF MISSING VALUES (>=50%)
     df = exclude_countries_high_missing_values(merged_df)
-    df = df.reset_index()
-    print(df)
+    print("Prepared Main Dataset:\n", df)
     return df
 
 prepared_df = data_preparation()
+
+
+# ----------------------------------
+# VARIABLES: Features, Target, Group
+#-----------------------------------
+
+y = prepared_df["child_mortality_igme"]
+X = prepared_df.drop(columns=["Code", "Entity", "Year", "child_mortality_igme"])
+group = prepared_df["Entity"]
+
+num_variables = prepared_df.drop(columns=["world_regions_wb"])
+cat_variables = prepared_df["world_regions_wb"]
+
+#print(X.columns)
+
+# ----------------------------------
+# Train/Test Split
+#-----------------------------------
+gs_split = GroupShuffleSplit(n_splits=1, train_size=0.8, test_size=0.2, random_state=99)
+train_index, test_index = next(gs_split.split(X, y, group))
+
+X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+group_train = group.iloc[train_index]
+group_test  = group.iloc[test_index]
+
+#Save Trainset and Testset as csv
+X_train.assign(Entity=group_train).to_csv("../00_data/2_split/X_train_df.csv", index=False)
+X_test.assign(Entity=group_test).to_csv("../00_data/2_split/X_test_df.csv", index=False)
+
+#X_train.to_csv("../00_data/2_split/X_train_df.csv", index=False)
+#X_test.to_csv("../00_data/2_split/X_test_df.csv", index=False)

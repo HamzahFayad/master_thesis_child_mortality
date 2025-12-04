@@ -79,6 +79,7 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     #Additional helper csv (assign each country a region based on World Bank)
     world_regions = pd.read_csv("../00_data/1_interim/world-regions-worldbank.csv")
     world_regions = world_regions.drop(["Entity", "Year"], axis=1)
+    world_regions = world_regions.rename(columns={"World regions according to WB": "world_regions_wb"})
 
     big_df = None
     joins = ['Entity', 'Code', 'Year']
@@ -116,27 +117,3 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
 
 
 load_merge = load_merge_raw_data(PATH)
-
-
-"""
-Exclude Countries from DF with Missing Values Threshold >= 50%
-"""
-THRESHOLD = 50
-def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
-    
-    all_missing_values = merged_df.isnull().groupby(merged_df["Entity"]).sum()
-    # get sum of values per country for 9 main potential features: 
-    values_count_per_country = merged_df.groupby(merged_df["Entity"]).size().iloc[0] * 9
-    
-    all_missing_values["total_missing"] = all_missing_values.sum(axis=1)    #total missing values
-    all_missing_values["total_missing_%"] = round((all_missing_values["total_missing"] / values_count_per_country) * 100, 2)  #total missing values %
-
-    top_missing_countries = all_missing_values.sort_values(ascending=False, by="total_missing_%")
-    exclude_countries = top_missing_countries[top_missing_countries["total_missing_%"] >= THRESHOLD]
-
-    filtered_df_01 = merged_df[~merged_df["Entity"].isin(exclude_countries.index.tolist())].copy()
-
-    print("NEW FILTERED DF", filtered_df_01)
-    return filtered_df_01
-
-pre_clean_df = exclude_countries_high_missing_values(load_merge)
