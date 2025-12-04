@@ -1,3 +1,16 @@
+#----------------------------------------------------------------------
+#data_cleaning.py
+#
+# Data integration: Load raw datasets (csv) from 00_data/0_raw/ and merge 
+#                   all datasets with child_mortality_igme (Label) as base
+# Exlude non-countries (remove additional continents etc. from Our World in Data)
+# Filter dataset by 6 year period (decision made through strategic analysis)
+# Scale up Label to 1000 (common for epidemiological research of U5MR)
+#
+# First Data Pre-Cleaning: 
+# Remove countries rows with high amount of missing values with threshold set at >= 50%
+#----------------------------------------------------------------------
+
 # Step A - load raw Data + merge all data with u5mr as base + filter 6 year period + scale up label to 1000
 
 #Imports
@@ -62,6 +75,11 @@ scale U5MR up to 1000
 @return merged, limited df
 """
 def load_merge_raw_data(PATH) -> pd.DataFrame:
+    
+    #Additional helper csv (assign each country a region based on World Bank)
+    world_regions = pd.read_csv("../00_data/1_interim/world-regions-worldbank.csv")
+    world_regions = world_regions.drop(["Entity", "Year"], axis=1)
+
     big_df = None
     joins = ['Entity', 'Code', 'Year']
     
@@ -85,14 +103,40 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
                 how='left' 
             )
     # get six years period with least NaNs and limit big_df
-    big_df = get_years_period(big_df)
-    #big_df = limit_period(big_df)
-
+    big_df = get_years_period(big_df)   #big_df = limit_period(big_df)
+    # scale u5mr to 1000 (common in research by UN IGME etc.)
     big_df["child_mortality_igme"] = big_df["child_mortality_igme"] * 10
-    big_df = big_df.reset_index(level=0)
+    
+    big_df = big_df.reset_index()       #big_df = big_df.reset_index(level=0)
+    
+    big_df = pd.merge(big_df, world_regions, on="Code", how="left")
+
     print(big_df)  
     return big_df
 
 
 load_merge = load_merge_raw_data(PATH)
 
+
+"""
+Exclude Countries from DF with Missing Values Threshold >= 50%
+"""
+THRESHOLD = 50
+def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
+    
+    all_missing_values = merged_df.isnull().groupby(merged_df["Entity"]).sum()
+    # get sum of values per country for 9 main potential features: 
+    values_count_per_country = merged_df.groupby(merged_df["Entity"]).size().iloc[0] * 9
+    
+    all_missing_values["total_missing"] = all_missing_values.sum(axis=1)    #total missing values
+    all_missing_values["total_missing_%"] = round((all_missing_values["total_missing"] / values_count_per_country) * 100, 2)  #total missing values %
+
+    top_missing_countries = all_missing_values.sort_values(ascending=False, by="total_missing_%")
+    exclude_countries = top_missing_countries[top_missing_countries["total_missing_%"] >= THRESHOLD]
+
+    filtered_df_01 = merged_df[~merged_df["Entity"].isin(exclude_countries.index.tolist())].copy()
+
+    print("NEW FILTERED DF", filtered_df_01)
+    return filtered_df_01
+
+pre_clean_df = exclude_countries_high_missing_values(load_merge)
