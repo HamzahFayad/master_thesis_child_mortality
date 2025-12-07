@@ -112,7 +112,7 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     
     big_df = pd.merge(big_df, world_regions, on="Code", how="left")
 
-    print(big_df)  
+    #print(big_df)  
     return big_df
 
 

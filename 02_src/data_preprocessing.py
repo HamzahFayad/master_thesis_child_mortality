@@ -20,14 +20,16 @@ def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
 
     filtered_df_01 = merged_df[~merged_df["Entity"].isin(exclude_countries.index.tolist())].copy()
 
-    print("NEW FILTERED DF", filtered_df_01)
+    #print("NEW FILTERED DF", filtered_df_01)
     return filtered_df_01
 
 
 """
+(REMOVE)
 Handle missing values #2: add missing values indicator (0 or 1)
 Make only for columns that have null values
 0 = not missing & 1 = missing
+"""
 """
 def missing_values_indicator(df) -> pd.DataFrame:
     
@@ -38,3 +40,4 @@ def missing_values_indicator(df) -> pd.DataFrame:
             missing_indicators_df[column+"_missing"] = missing_indicators_df[column].isna().astype(int)
     print("DF with missing indicators", missing_indicators_df)
     return missing_indicators_df
+"""

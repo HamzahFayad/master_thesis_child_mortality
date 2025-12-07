@@ -47,7 +47,7 @@ def data_preparation():
     merged_df = load_merge_raw_data(DATA_PATH)
     #STEP 2: REMOVE COUNTRIES WITH HIGH AMOUNT OF MISSING VALUES (>=50%)
     df = exclude_countries_high_missing_values(merged_df)
-    print("Prepared Main Dataset:\n", df)
+    #print("Prepared Main Dataset:\n", df)
     return df
 
 prepared_df = data_preparation()
