@@ -57,7 +57,6 @@ def get_years_period(df):
     # get the minimum NaN value
     found_period = min(nulls_list, key=lambda n: n[2])
     df = df[(df.index.get_level_values(2) >= found_period[0]) & (df.index.get_level_values(2) <= found_period[1])]
-
     return df
 
 
@@ -80,6 +79,12 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     world_regions = pd.read_csv("../00_data/1_interim/world-regions-worldbank.csv")
     world_regions = world_regions.drop(["Entity", "Year"], axis=1)
     world_regions = world_regions.rename(columns={"World regions according to WB": "world_regions_wb"})
+    
+    world_income_class = pd.read_csv("../00_data/1_interim/world-bank-income-groups.csv")
+    world_income_class = world_income_class.drop(["Entity"], axis=1)
+    world_income_class = world_income_class.rename(columns={"World Bank's income classification": "world_income_group"})
+    
+    
 
     big_df = None
     joins = ['Entity', 'Code', 'Year']
@@ -111,6 +116,7 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     big_df = big_df.reset_index()       #big_df = big_df.reset_index(level=0)
     
     big_df = pd.merge(big_df, world_regions, on="Code", how="left")
+    big_df = pd.merge(big_df, world_income_class, on=["Code", "Year"], how="left")
 
     #print(big_df)  
     return big_df
