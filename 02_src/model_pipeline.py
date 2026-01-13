@@ -206,7 +206,18 @@ for q in qr_quantiles:
         inverse_func=np.expm1
     )
     
-    qr_pipeline.fit(X, y)
-    joblib.dump(qr_pipeline, f"../04_models/quantile_{q}.pkl")
+    qr_pipeline.fit(X_train, y_train)
+    #qr_pipeline.fit(X, y)
 
-print("Quantile models saved")
+    y_pred_holdout = qr_pipeline.predict(X_test)
+    residuen = y_test - y_pred_holdout
+    shift = np.quantile(residuen, q)
+    #print(shift)
+    
+    qr_pipeline.fit(X, y)
+    
+    joblib.dump(qr_pipeline, f"../04_models/quantile_{q}.pkl")
+    #joblib.dump(qr_pipeline, f"../04_models/quant_{q}.pkl")
+    joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
+
+#print("Quantile models saved")
