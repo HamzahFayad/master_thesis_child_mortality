@@ -36,6 +36,8 @@ def ratio_health_gdp(X):
 # Preprocessing Pipeline Steps
 #-----------------------------------
 def preprocessing_pipeline():
+    
+    print(f"Initialize Preprocessing: Imputing, Transforming, Scaling, OHE...")
 
     # HEALTH/GDP RATIO FUNCTRANSFORMER
     ratio_feature = FunctionTransformer(
@@ -96,5 +98,7 @@ def preprocessing_pipeline():
         ("final_impute", KNNImputer(n_neighbors=5, weights="distance"))
         
     ])
+    
+    print(f"Preprocessing finished...")
     
     return end_pipe

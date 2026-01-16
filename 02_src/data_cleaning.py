@@ -85,9 +85,10 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     world_income_class = world_income_class.rename(columns={"World Bank's income classification": "world_income_group"})
     
     
-
     big_df = None
     joins = ['Entity', 'Code', 'Year']
+    
+    print("Load and merge raw datasets, reduce dataset to limited year-periods per country...")
     
     for name in sorted_files:
         cols_names = new_col_names(name)
@@ -122,7 +123,7 @@ def load_merge_raw_data(PATH) -> pd.DataFrame:
     return big_df
 
 
-load_merge = load_merge_raw_data(PATH)
+#load_merge = load_merge_raw_data(PATH)
 
 
 
@@ -145,4 +146,5 @@ def exclude_countries_high_missing_values(merged_df) -> pd.DataFrame:
     filtered_df_01 = merged_df[~merged_df["Entity"].isin(exclude_countries.index.tolist())].copy()
 
     #print("NEW FILTERED DF", filtered_df_01)
+    print("Exclude countries with high missing values rate (> 50%)...")
     return filtered_df_01

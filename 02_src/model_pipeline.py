@@ -1,4 +1,4 @@
-# Pipeline from Data Loading to Model
+# Pipeline from Data Loading to Model ("Production Ready")
 #----------------------------------------------------------------------
 # model_pipeline.py
 #
@@ -58,7 +58,9 @@ qr_quantiles = [0.25, 0.5, 0.75]
 # ----------------------------------
 # Loop Quantiles Fit & Save Q-Models
 #-----------------------------------
+print("Start Final Model Pipeline & Fit Pipeline")
 for q in qr_quantiles:
+    
         
     model_pipe = Pipeline([
         ("preprocess", pre_pipe),
@@ -88,4 +90,4 @@ for q in qr_quantiles:
     #joblib.dump(qr_pipeline, f"../04_models/quant_{q}.pkl")
     joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
 
-#print("Quantile models saved")
+    print(f"Quantile {q} model saved")
