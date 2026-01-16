@@ -1,7 +1,8 @@
 .ipynb_checkpoints/
 masterthesis_venv
 infos.txt
-requirements.txt
+#requirements.txt
 __pycache__/
 01_notebooks/4_model_training2.ipynb
 01_notebooks/4_testmodeltraining2.ipynb
+01_notebooks/4_model_training.ipynb
