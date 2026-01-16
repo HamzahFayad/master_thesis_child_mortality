@@ -36,14 +36,17 @@ Thesis und weitere Dokumentationen
 
 Prerequisites: Python 3.11+
 
-1. Umgebung erstellen:
-python3.11 -m venv masterthesis_venv
-source masterthesis_venv/bin/activate  # Mac/Linux
+**1. Umgebung erstellen:**
+
+python3.11 -m venv masterthesis_venv  
+
+source masterthesis_venv/bin/activate  # Mac/Linux  
+
 oder: masterthesis_venv\Scripts\activate  # Windows
 
-2. Abhängigkeiten installieren:
+**2. Abhängigkeiten installieren:**
 `pip install -r requirements.txt`
 
-3. Pipeline ausführen:
+**3. Pipeline ausführen:**
 `cd 02_src`
 `python3 model_pipeline.py`
