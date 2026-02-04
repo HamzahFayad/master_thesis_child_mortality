@@ -31,6 +31,25 @@ def ratio_health_gdp(X):
         X["gdp_per_capita_worldbank"]
     )
     return X
+
+# ----------------------------------
+# create interaction terms based on domain knowledge:
+# many feature synergies  
+# @return FunctionTransformer
+#-----------------------------------
+"""def passthrough_feature_int_names(transformer, input_features=None):
+    return ["nurses_and_midwives_per_1000_people", "physicians_per_1000_people", 
+            "prevalence_of_undernourishment","share_of_population_urban", "share_without_improved_water", 
+            "vaccination_coverage_who_unicef","years_of_schooling", 
+            "urban_x_medical_access", "urban_x_water_access"]
+    
+def feature_interactions(X):
+    X = X.copy()
+    total_medical_staff = X["nurses_and_midwives_per_1000_people"] + X["physicians_per_1000_people"]
+    X["urban_x_medical_access"] = total_medical_staff * X["share_of_population_urban"]
+    X["urban_x_water_access"] = X["share_of_population_urban"] * X["share_without_improved_water"]
+    return X
+"""
     
 # ----------------------------------
 # Preprocessing Pipeline Steps
@@ -45,6 +64,13 @@ def preprocessing_pipeline():
         validate = False, 
         feature_names_out=passthrough_featurenames
         )
+    
+     # INTERACTION TERMS FUNCTRANSFORMER
+    """interaction_terms = FunctionTransformer(
+        func = feature_interactions, 
+        validate = False, 
+        feature_names_out=passthrough_feature_int_names
+        )"""
 
     # IMPUTE AND TRANSFORM NUMERIC VARIABLES
     impute_transform = ColumnTransformer([
@@ -73,6 +99,16 @@ def preprocessing_pipeline():
         ]), [config.col_gdp, config.col_healthspending])
         
     ], verbose_feature_names_out=False, remainder="passthrough").set_output(transform="pandas")
+    
+    # CREATE INTERACTION COLUMNS  
+    """f_interactions = ColumnTransformer([
+    
+        ("int_terms", Pipeline([
+            ("interactions", interaction_terms),
+        ]), config.rest_nums)
+    
+    ], verbose_feature_names_out=False, remainder="passthrough").set_output(transform="pandas")
+    """
 
     # ONE HOT ENCODE CATEGORIC VARIABLES
     ohe_cats = Pipeline(steps=[
@@ -84,7 +120,7 @@ def preprocessing_pipeline():
     scale_ohe_step = ColumnTransformer([
         
         ("drop_num_cols", "drop", [config.col_gdp, config.col_healthspending]),
-        ("scale_nums", RobustScaler(), config.rest_nums + ["healthspending_gdp_ratio"]),
+        ("scale_nums", RobustScaler(), config.rest_nums + ["healthspending_gdp_ratio"]), #"urban_x_medical_access", "urban_x_water_access"]),
         ("ohe_cats", ohe_cats, [config.col_regions, config.col_incomegroup]),
         
     ], verbose_feature_names_out=False, remainder="passthrough").set_output(transform="pandas")
@@ -94,6 +130,7 @@ def preprocessing_pipeline():
         
         ("prep_nums", impute_transform),
         ("ratio_feature", ratio_he_gdp),
+        #("interaction_terms", f_interactions),
         ("scale_ohe", scale_ohe_step),
         ("final_impute", KNNImputer(n_neighbors=5, weights="distance"))
         
