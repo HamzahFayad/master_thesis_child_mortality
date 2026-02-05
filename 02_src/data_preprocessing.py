@@ -32,6 +32,18 @@ def ratio_health_gdp(X):
     )
     return X
 
+def create_interaction(df):
+    df = df.copy()
+    cat_cols = [c for c in df.columns if c.startswith('world_income_group_')]
+    for col in cat_cols:
+        df[f'schooling_x_{col}'] = df[col] * df['years_of_schooling']
+    return df
+
+def get_inter_names(transformer, input_features):
+    cat_cols = [c for c in input_features if c.startswith('world_income_group_')]
+    new_cols = [f'schooling_x_{c}' for c in cat_cols]
+    return list(input_features) + new_cols
+
 # ----------------------------------
 # create interaction terms based on domain knowledge:
 # many feature synergies  
@@ -132,9 +144,10 @@ def preprocessing_pipeline():
         ("ratio_feature", ratio_he_gdp),
         #("interaction_terms", f_interactions),
         ("scale_ohe", scale_ohe_step),
-        ("final_impute", KNNImputer(n_neighbors=5, weights="distance"))
+        #('interaction', FunctionTransformer(create_interaction, feature_names_out=get_inter_names)),
+        #("final_impute", KNNImputer(n_neighbors=5, weights="distance"))
         
-    ])
+    ]).set_output(transform="pandas")
     
     print(f"Preprocessing finished...")
     
