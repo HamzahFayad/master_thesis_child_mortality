@@ -86,7 +86,7 @@ for q in qr_quantiles:
         
     model_pipe.fit(config.X, config.y)
         
-    joblib.dump(model_pipe, f"../04_models/quantiles_new_{q}.pkl")
+    joblib.dump(model_pipe, f"../04_models/int_quantile_{q}.pkl")
     #joblib.dump(qr_pipeline, f"../04_models/quant_{q}.pkl")
     joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
 
