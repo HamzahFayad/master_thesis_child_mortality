@@ -26,27 +26,32 @@ wiederverwendbare Funktionen, Refactorings aus notebooks und finale Pipeline
 wichtige Diagramme aus allen notebooks
 - `04_models/`
 Model gespeichert zur Weiterverwendung  
-- `05_reports/`
-Thesis und weitere Dokumentationen 
+- `05_report/`
+Thesis 
 
 ### Simulationstool:
+Zum Projekt gehört auch ein Streamlit szenariobasiertes Simulationstool:
 [Tool Git Repository](https://github.com/HamzahFayad/master_thesis_streamlit_demo)
 
 ### Setup:
 
-Prerequisites: Python 3.11+
+Vorraussetzungen: Python 3.11 (oder höher)
+Git (zum Klonen des Repos)
 
-**1. Umgebung erstellen:**
+**1. Umgebung lokal erstellen:**
 
-python3.11 -m venv masterthesis_venv  
+```bash
+git clone https://github.com/HamzahFayad/master_thesis_child_mortality
 
-source masterthesis_venv/bin/activate  # Mac/Linux  
+python3 -m venv masterthesis_venv
 
-oder: masterthesis_venv\Scripts\activate  # Windows
+source masterthesis_venv/bin/activate #Mac/Linus
+masterthesis_venv\Scripts\activate #Windows 
 
-**2. Abhängigkeiten installieren:**
-`pip install -r requirements.txt`
+pip install -r requirements.txt
 
-**3. Pipeline ausführen:**
-`cd 02_src`
-`python3 model_pipeline.py`
+cd 02_src
+python3 model_pipeline.py
+```
+
+> Das Repository dient zur Reproduzierbarkeit. Für konkrete Ergebnisse siehe Notebooks unter 01_notebooks und Thesis unter 05_report
