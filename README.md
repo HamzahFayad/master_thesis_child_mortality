@@ -54,4 +54,4 @@ cd 02_src
 python3 model_pipeline.py
 ```
 
-> Das Repository dient zur Reproduzierbarkeit. Für konkrete Ergebnisse siehe Notebooks unter 01_notebooks und Thesis unter 05_report
+> Das Repository dient zur Reproduzierbarkeit. Für konkrete Ergebnisse siehe Notebooks unter `01_notebooks/` und Thesis unter `05_report/`
