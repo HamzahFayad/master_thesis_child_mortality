@@ -70,24 +70,16 @@ for q in qr_quantiles:
         ))
     ])
         
-    #qr_pipeline = TransformedTargetRegressor(
-    #    regressor=model_pipe,
-    #    func=np.log1p,
-    #    inverse_func=np.expm1
-    #)
-        
     model_pipe.fit(X_train, y_train)
-    #qr_pipeline.fit(X, y)
 
     y_pred_holdout = model_pipe.predict(X_test)
     residuen = y_test - y_pred_holdout
     shift = np.quantile(residuen, q)
-    print(shift)
+    #print(shift)
         
     model_pipe.fit(config.X, config.y)
         
-    joblib.dump(model_pipe, f"../04_models/int_quantile_{q}.pkl")
-    #joblib.dump(qr_pipeline, f"../04_models/quant_{q}.pkl")
-    joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
+    joblib.dump(model_pipe, f"../04_models/quantile_{q}.pkl")
+    #joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
 
     print(f"Quantile {q} model saved")
