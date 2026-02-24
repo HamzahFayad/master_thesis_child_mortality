@@ -54,7 +54,7 @@ pre_pipe = preprocessing_pipeline()
 # Define 3 Quantiles
 #-----------------------------------
 qr_quantiles = [0.25, 0.5, 0.75]
-
+coefficients = {}
 # ----------------------------------
 # Loop Quantiles Fit & Save Q-Models
 #-----------------------------------
@@ -78,8 +78,15 @@ for q in qr_quantiles:
     #print(shift)
         
     model_pipe.fit(config.X, config.y)
+    
+    reg = model_pipe.named_steps["model"]
+    feature_names = model_pipe[:-1].get_feature_names_out()
+    coefficients[f'Q_{q}'] = [reg.intercept_] + list(reg.coef_)
         
     joblib.dump(model_pipe, f"../04_models/quantile_{q}.pkl")
     #joblib.dump(shift, f"../04_models/shift_quant{q}.pkl")
 
     print(f"Quantile {q} model saved")
+    
+coeff_res = pd.DataFrame(coefficients, index=["Intercept"] + list(feature_names))
+print(coeff_res)
