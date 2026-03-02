@@ -26,8 +26,6 @@ wiederverwendbare Funktionen, Refactorings aus notebooks und finale Pipeline
 wichtige Diagramme aus allen notebooks
 - `04_models/`
 Model gespeichert zur Weiterverwendung  
-- `05_report/`
-Thesis 
 
 ### Simulationstool:
 Zum Projekt gehört auch ein Streamlit szenariobasiertes Simulationstool:
@@ -54,4 +52,4 @@ cd 02_src
 python3 model_pipeline.py
 ```
 
-> Das Repository dient zur Reproduzierbarkeit. Für konkrete Ergebnisse siehe Notebooks unter `01_notebooks/` und Thesis unter `05_report/`
+> Das Repository dient zur Reproduzierbarkeit. Für konkrete Ergebnisse siehe Notebooks unter `01_notebooks/`
